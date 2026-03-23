@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Learning: Quarantine Protocols</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            purple: '#532A8C',
+                            'purple-muted': '#9D8ABB',
+                            'purple-light': '#C3ACE8',
+                            green: '#7ABF49',
+                            'green-light': '#96BF78',
+                            bg: '#F2F2F2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            background-color: #F2F2F2;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Utility classes for the hover-to-reveal box effect */
+        .reveal-box {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .reveal-box .cover {
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .reveal-box:hover .cover,
+        .reveal-box.active .cover {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Tab transitions */
+        .tab-content {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <script>
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Reset all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-purple', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-brand-purple', 'border-2', 'border-brand-purple', 'hover:bg-brand-purple-light/10');
+            });
+            
+            // Show active tab
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            
+            // Highlight active button
+            const activeBtn = document.getElementById('btn-tab-' + tabId);
+            activeBtn.classList.remove('bg-white', 'text-brand-purple', 'border-2', 'border-brand-purple', 'hover:bg-brand-purple-light/10');
+            activeBtn.classList.add('bg-brand-purple', 'text-white', 'shadow-md');
+        }
+    </script>
+</head>
+<body class="text-gray-800 antialiased min-h-screen pb-24">
+
+    <main class="w-full px-6 py-12 sm:px-12 lg:px-20 xl:px-24">
+        
+        <!-- GLOBAL HEADER -->
+        <header class="mb-8 text-center sm:text-left">
+            <h1 class="text-4xl md:text-5xl font-bold text-brand-purple mb-4 drop-shadow-sm leading-tight">
+                Quarantine <span class="text-brand-purple-muted">Management</span>
+            </h1>
+            <p class="text-base md:text-lg text-gray-700 max-w-3xl leading-relaxed mb-6">
+                Quarantine is a critical aspect of infection control, acting as a "firewall" when there is a known or suspected risk of high-virulence pathogens.
+            </p>
+            <div class="inline-flex items-center text-left gap-3 px-5 py-3 bg-white text-brand-purple rounded-lg font-medium text-sm sm:text-base shadow-sm border border-brand-purple-light/50">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 flex-shrink-0">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.543-1.59-1.59" />
+                </svg>
+                <span><strong>How to interact:</strong> Hover your mouse over (or tap) the solid colored boxes below to reveal the hidden information.</span>
+            </div>
+        </header>
+
+        <!-- TAB NAVIGATION -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-10 max-w-2xl">
+            <button id="btn-tab-protocols" onclick="switchTab('protocols')" class="tab-btn flex-1 py-3 px-6 text-center font-bold text-lg rounded-lg transition-all duration-300 bg-brand-purple text-white shadow-md">
+                Quarantine Protocols
+            </button>
+            <button id="btn-tab-actions" onclick="switchTab('actions')" class="tab-btn flex-1 py-3 px-6 text-center font-bold text-lg rounded-lg transition-all duration-300 bg-white text-brand-purple border-2 border-brand-purple hover:bg-brand-purple-light/10">
+                Procedural Actions
+            </button>
+        </div>
+
+        <!-- TAB 1 CONTENT: PROTOCOLS -->
+        <div id="tab-protocols" class="tab-content">
+            <section class="space-y-6 mb-10">
+                
+                <!-- Item 1: When to Initiate (Bar Left) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-2 sm:order-1 flex justify-end w-full h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base text-gray-700 bg-white border-l-8 border-brand-purple h-full flex items-center min-h-[4rem]">
+                                Quarantine is required if instruments are used on a patient with a known infectious disease or in an emergency where a patient’s status is unknown but symptoms suggest high risk.
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-purple z-10"></div>
+                        </div>
+                    </div>
+                    <div class="order-1 sm:order-2 w-full text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">When to Initiate</h2>
+                    </div>
+                </article>
+
+                <!-- Item 2: Purpose (Bar Right) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-1 w-full sm:text-right text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">Purpose</h2>
+                    </div>
+                    <div class="order-2 w-full flex justify-start h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base text-gray-700 bg-white border-r-8 border-brand-green h-full flex items-center min-h-[4rem]">
+                                The primary objective is to physically and procedurally isolate "at-risk" equipment from the general instrument pool, minimizing the risk of cross-contamination.
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-green z-10"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Item 3: High-Risk Microorganisms (Bar Left) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-2 sm:order-1 flex justify-end w-full h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base text-gray-700 bg-white border-l-8 border-brand-purple-muted h-full flex items-center min-h-[4rem]">
+                                Protocols are typically reserved for virulent agents like Creutzfeldt-Jakob Disease (CJD). Prions—the causative agents of CJD—are not destroyed by standard sterilisation cycles (134°C for 3.5 minutes) and require specialized intervention.
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-purple-muted z-10"></div>
+                        </div>
+                    </div>
+                    <div class="order-1 sm:order-2 w-full text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">High-Risk Microorganisms</h2>
+                    </div>
+                </article>
+
+            </section>
+        </div>
+
+        <!-- TAB 2 CONTENT: PROCEDURAL ACTIONS -->
+        <div id="tab-actions" class="tab-content hidden">
+            <div class="mb-8 text-left">
+                <p class="text-base md:text-lg text-gray-700 max-w-full leading-relaxed">
+                    For Quarantined Loads. When a quarantine event is triggered, the following steps must be&nbsp;followed:
+                </p>
+            </div>
+
+            <section class="space-y-6">
+
+                <!-- Item 4: Immediate Isolation (Bar Right) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-1 w-full sm:text-right text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">Immediate Isolation</h2>
+                    </div>
+                    <div class="order-2 w-full flex justify-start h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base text-gray-700 bg-white border-r-8 border-brand-green-light h-full flex items-center min-h-[4rem]">
+                                Instruments must be placed in a separate, puncture-resistant, and leak-proof container at the chairside. This container must be sealed and clearly labeled <strong>"QUARANTINE"</strong>.
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-green-light z-10"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Item 5: Separate Processing (Bar Left) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-2 sm:order-1 flex justify-end w-full h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base text-gray-700 bg-white border-l-8 border-brand-purple-light h-full flex items-center min-h-[4rem]">
+                                Quarantined items must not enter the general cleaning stream (e.g., shared ultrasonic baths). They must be cleaned and sterilised as a standalone load.
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-purple-light z-10"></div>
+                        </div>
+                    </div>
+                    <div class="order-1 sm:order-2 w-full text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">Separate Processing</h2>
+                    </div>
+                </article>
+
+                <!-- Item 6: Specialised Decontamination (Bar Right) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-1 w-full sm:text-right text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">Specialised Decontamination</h2>
+                    </div>
+                    <div class="order-2 w-full flex justify-start h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base text-gray-700 bg-white border-r-8 border-brand-purple h-full flex flex-col justify-center min-h-[4rem]">
+                                <p class="mb-2 font-medium text-gray-800">Based on the risk (such as CJD), the practice may:</p>
+                                <ul class="list-disc ml-5 space-y-1 marker:text-brand-purple text-sm">
+                                    <li>Use extended sterilisation cycles (e.g., 18 minutes at 134°C).</li>
+                                    <li>Engage an external facility for specialized decontamination.</li>
+                                    <li>Designate the instruments as single-use and dispose of them via high-temperature incineration.</li>
+                                </ul>
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-purple z-10"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Item 7: Incident Reporting (Bar Left) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-2 sm:order-1 flex justify-end w-full h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base text-gray-700 bg-white border-l-8 border-brand-green h-full flex items-center min-h-[4rem]">
+                                A detailed report must be completed, documenting the patient’s details, the batch numbers involved, and the specific actions taken.
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-green z-10"></div>
+                        </div>
+                    </div>
+                    <div class="order-1 sm:order-2 w-full text-left">
+                        <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">Incident Reporting</h2>
+                    </div>
+                </article>
+
+                <!-- Item 8: Example (Bar Right) -->
+                <article class="grid grid-cols-1 sm:grid-cols-2 items-center gap-4 sm:gap-8">
+                    <div class="order-1 w-full sm:text-right text-left">
+                        <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800">Example: Quarantine Processes</h2>
+                    </div>
+                    <div class="order-2 w-full flex justify-start h-full">
+                        <div class="reveal-box w-full sm:w-[90%] rounded shadow-sm hover:shadow-md transition-shadow overflow-hidden" onclick="this.classList.toggle('active')">
+                            <div class="p-4 sm:p-5 text-sm sm:text-base bg-brand-purple text-white border-r-8 border-brand-purple-muted h-full flex flex-col justify-center min-h-[4rem]">
+                                <strong class="text-brand-purple-light font-bold block mb-1 opacity-90">Scenario:</strong> 
+                                A dental practice treats an emergency patient presenting with an "unknown neurological condition under investigation." During the procedure, instruments come into contact with blood and saliva.
+                            </div>
+                            <div class="cover absolute inset-0 bg-brand-purple-muted z-10"></div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+        </div>
+
+    </main>
+</body>
+</html>
